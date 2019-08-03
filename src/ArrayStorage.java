@@ -4,44 +4,38 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    protected Resume[] storage = new Resume[10000];
-    protected int size;
+    private Resume[] storage = new Resume[10000];
+    private int size;
 
-    protected void clear() {
-        for (int index = 0; index < size; index++) {
-            storage[index] = null;
+    void clear() {
+        for (int i = 0; i < size; i++) {
+            storage[i] = null;
         }
         size = 0;
     }
 
-    protected void save(Resume r) {
+    void save(Resume r) {
         if (size == storage.length) {
             System.out.println("ArrayStorage is full");
-            return;
         } else {
             storage[size] = r;
             size++;
         }
     }
 
-    protected Resume get(String uuid) {
-        Resume resume = null;
-        for (int index = 0; index < size; index++) {
-            if (uuid.equals(storage[index].uuid)) {
-                resume = storage[index];
-                break;
+    Resume get(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                return storage[i];
             }
         }
-        return resume;
+        return null;
     }
 
-    protected void delete(String uuid) {
-        for (int index = 0; index < size; index++) {
-            if (uuid.equals(storage[index].uuid)) {
-                storage[index] = null;
-                for (int i = index; i < size; i++) {
-                    storage[i] = storage[i + 1];
-                }
+    void delete(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
+                System.arraycopy(storage, i + 1, storage, i, size - i - 1);
                 size--;
             }
         }
@@ -50,14 +44,14 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    protected Resume[] getAll() {
-        Resume[] tempStorage = new Resume[size];
-        System.arraycopy(storage, 0, tempStorage, 0, size);
+    Resume[] getAll() {
+        Resume[] resumes = new Resume[size];
+        System.arraycopy(storage, 0, resumes, 0, size);
 
-        return tempStorage;
+        return resumes;
     }
 
-    protected int size() {
+    int size() {
         return size;
     }
 }
