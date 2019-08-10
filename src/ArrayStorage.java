@@ -49,6 +49,19 @@ public class ArrayStorage {
         }
     }
 
+    void update(Resume resume) {
+        if (isContained(resume)) {
+            for (int i = 0; i < size; i++) {
+                if (resume.equals(storage[i])) {
+                    storage[i] = resume;
+                    break;
+                }
+            }
+        } else {
+            System.out.println("No such resume");
+        }
+    }
+
     private boolean isContained(Resume resume) {
         for (int i = 0; i < size; i++) {
             if (resume.equals(storage[i])) {
