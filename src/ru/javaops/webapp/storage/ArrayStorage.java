@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size;
 
     public void clear() {
@@ -18,70 +18,52 @@ public class ArrayStorage {
 
     public void save(Resume resume) {
         if (size == storage.length) {
-            System.out.println("ArrayStorage is full");
-        } else if (!isContained(resume)) {
+            System.out.println("Storage is full");
+        } else if (!(indexOf(resume.getUuid()) == -1)) {
+            System.out.println("Resume already exists");
+        } else {
             storage[size] = resume;
             size++;
-        } else {
-            System.out.println("Resume already exists");
         }
     }
 
     public Resume get(String uuid) {
-        if (isContained(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (uuid.equals(storage[i].getUuid())) {
-                    return storage[i];
-                }
-            }
+        int i = indexOf(uuid);
+        if (i == -1) {
+            System.out.println("No such resume");
+            return null;
+        } else {
+            return storage[i];
         }
-        System.out.println("No such resume");
-        return null;
     }
 
     public void delete(String uuid) {
-        if (isContained(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (uuid.equals(storage[i].getUuid())) {
-                    System.arraycopy(storage, i + 1, storage, i, size - i - 1);
-                    storage[size - i] = null;
-                    size--;
-                }
-            }
-        } else {
+        int i = indexOf(uuid);
+        if (i == -1) {
             System.out.println("No such resume");
+        } else {
+            System.arraycopy(storage, i + 1, storage, i, size - i - 1);
+            storage[size - 1] = null;
+            size--;
         }
     }
 
     public void update(Resume resume) {
-        if (isContained(resume)) {
-            for (int i = 0; i < size; i++) {
-                if (resume.equals(storage[i])) {
-                    storage[i] = resume;
-                    break;
-                }
-            }
-        } else {
+        int i = indexOf(resume.getUuid());
+        if ((i == -1)) {
             System.out.println("No such resume");
+        } else {
+            storage[i] = resume;
         }
     }
 
-    private boolean isContained(Resume resume) {
-        for (int i = 0; i < size; i++) {
-            if (resume.equals(storage[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isContained(String uuid) {
+    private int indexOf(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return -1;
     }
 
     /**
