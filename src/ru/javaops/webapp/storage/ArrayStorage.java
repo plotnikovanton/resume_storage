@@ -19,7 +19,7 @@ public class ArrayStorage {
     public void save(Resume resume) {
         if (size == storage.length) {
             System.out.println("Storage is full");
-        } else if (!(indexOf(resume.getUuid()) == -1)) {
+        } else if (indexOf(resume.getUuid()) != -1) {
             System.out.println("Resume already exists");
         } else {
             storage[size] = resume;
@@ -28,32 +28,32 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int i = indexOf(uuid);
-        if (i == -1) {
+        int index = indexOf(uuid);
+        if (index == -1) {
             System.out.println("No such resume");
             return null;
         } else {
-            return storage[i];
+            return storage[index];
         }
     }
 
     public void delete(String uuid) {
-        int i = indexOf(uuid);
-        if (i == -1) {
+        int index = indexOf(uuid);
+        if (index == -1) {
             System.out.println("No such resume");
         } else {
-            System.arraycopy(storage, i + 1, storage, i, size - i - 1);
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
             storage[size - 1] = null;
             size--;
         }
     }
 
     public void update(Resume resume) {
-        int i = indexOf(resume.getUuid());
-        if ((i == -1)) {
+        int index = indexOf(resume.getUuid());
+        if (index == -1) {
             System.out.println("No such resume");
         } else {
-            storage[i] = resume;
+            storage[index] = resume;
         }
     }
 
