@@ -13,7 +13,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[insertionPosition] = resume;
     }
 
-    protected int indexOf(String uuid) {
+    protected Integer findKey(String uuid) {
         Resume searchKey = new Resume(uuid);
         return Arrays.binarySearch(storage, 0, size, searchKey);
     }

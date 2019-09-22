@@ -50,7 +50,7 @@ public class MainArray {
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
+                    System.out.println(ARRAY_STORAGE.getResume(uuid));
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
