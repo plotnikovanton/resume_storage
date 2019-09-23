@@ -12,7 +12,7 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);
         }
-        return getResume(uuid);
+        return getResume(key);
     }
 
     public void save(Resume resume) {
@@ -20,7 +20,7 @@ public abstract class AbstractStorage implements Storage {
         if (isExist(key)) {
             throw new ExistStorageException(resume.getUuid());
         } else {
-            saveResume(resume);
+            saveResume(key, resume);
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(key)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            updateResume(resume);
+            updateResume(key, resume);
         }
     }
 
@@ -38,17 +38,17 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);
         } else {
-            deleteResume(uuid);
+            deleteResume(key);
         }
     }
 
-    protected abstract Resume getResume(String uuid);
+    protected abstract Resume getResume(Object key);
 
-    protected abstract void saveResume(Resume resume);
+    protected abstract void saveResume(Object key, Resume resume);
 
-    protected abstract void updateResume(Resume resume);
+    protected abstract void updateResume(Object key, Resume resume);
 
-    protected abstract void deleteResume(String uuid);
+    protected abstract void deleteResume(Object key);
 
     protected abstract boolean isExist(Object key);
 
