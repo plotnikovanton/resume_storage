@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object key) {
         int index = (Integer) key;
-        return index >= 0 && index < size;
+        return index >= 0;
     }
 
     protected abstract void insertResume(Resume resume, int index);

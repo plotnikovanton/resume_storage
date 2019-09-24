@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ListStorage extends AbstractStorage {
 
-    private static List<Resume> listStorage = new ArrayList<>();
+    private List<Resume> listStorage = new ArrayList<>();
 
     @Override
     protected Resume getResume(Object key) {
@@ -35,7 +35,7 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object key) {
         int index = (Integer) key;
-        return index >= 0 && index < listStorage.size();
+        return index >= 0;
     }
 
     @Override
@@ -55,12 +55,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        int size = listStorage.size();
-        Resume[] arr = new Resume[size];
-        for (int i = 0; i < size; i++) {
-            arr[i] = listStorage.get(i);
-        }
-        return arr;
+        return listStorage.toArray(new Resume[listStorage.size()]);
     }
 
     @Override
