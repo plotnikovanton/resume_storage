@@ -22,10 +22,10 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r5);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.getResume(r1.getUuid()));
+        System.out.println("Get r1: " + ARRAY_STORAGE.doGet(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.getResume("dummy"));
+        System.out.println("Get dummy: " + ARRAY_STORAGE.doGet("dummy"));
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
@@ -40,7 +40,7 @@ public class MainTestArrayStorage {
 
     private static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : ARRAY_STORAGE.getAllSorted()) {
             System.out.println(r);
         }
     }

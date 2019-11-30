@@ -4,6 +4,8 @@ import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -19,13 +21,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(Object key) {
+    public Resume doGet(Object key) {
         int index = (Integer) key;
         return storage[index];
     }
 
     @Override
-    public void saveResume(Object key, Resume resume) {
+    public void doSave(Object key, Resume resume) {
         int index = (Integer) key;
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
@@ -36,13 +38,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateResume(Object key, Resume resume) {
+    public void doUpdate(Object key, Resume resume) {
         int index = (Integer) key;
         storage[index] = resume;
     }
 
     @Override
-    public void deleteResume(Object key) {
+    public void doDelete(Object key) {
         int index = (Integer) key;
         removeResume(index);
         storage[size - 1] = null;
@@ -50,8 +52,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public List<Resume> getAllSorted() {
+        List<Resume> storageAsList = Arrays.asList(Arrays.copyOfRange(storage, 0, size));
+        Collections.sort(storageAsList);
+        return storageAsList;
     }
 
     @Override
@@ -68,7 +72,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void insertResume(Resume resume, int index);
 
-    protected abstract Integer findKey(String uuid);
+    protected abstract Integer getSearchKey(String key);
 
     protected abstract void removeResume(int index);
 }

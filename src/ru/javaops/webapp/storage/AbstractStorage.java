@@ -8,49 +8,49 @@ public abstract class AbstractStorage implements Storage {
 
 
     public Resume get(String uuid) {
-        Object key = findKey(uuid);
+        Object key = getSearchKey(uuid);
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);
         }
-        return getResume(key);
+        return doGet(key);
     }
 
     public void save(Resume resume) {
-        Object key = findKey(resume.getUuid());
+        Object key = getSearchKey(resume.getUuid());
         if (isExist(key)) {
             throw new ExistStorageException(resume.getUuid());
         } else {
-            saveResume(key, resume);
+            doSave(key, resume);
         }
     }
 
     public void update(Resume resume) {
-        Object key = findKey(resume.getUuid());
+        Object key = getSearchKey(resume.getUuid());
         if (!isExist(key)) {
             throw new NotExistStorageException(resume.getUuid());
         } else {
-            updateResume(key, resume);
+            doUpdate(key, resume);
         }
     }
 
     public void delete(String uuid) {
-        Object key = findKey(uuid);
+        Object key = getSearchKey(uuid);
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);
         } else {
-            deleteResume(key);
+            doDelete(key);
         }
     }
 
-    protected abstract Resume getResume(Object key);
+    protected abstract Resume doGet(Object key);
 
-    protected abstract void saveResume(Object key, Resume resume);
+    protected abstract void doSave(Object key, Resume resume);
 
-    protected abstract void updateResume(Object key, Resume resume);
+    protected abstract void doUpdate(Object key, Resume resume);
 
-    protected abstract void deleteResume(Object key);
+    protected abstract void doDelete(Object key);
 
     protected abstract boolean isExist(Object key);
 
-    protected abstract Object findKey(String uuid);
+    protected abstract Object getSearchKey(String key);
 }
