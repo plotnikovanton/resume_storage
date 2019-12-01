@@ -6,7 +6,7 @@ import ru.javaops.webapp.model.Resume;
 
 import static org.junit.Assert.fail;
 
-public class AbstractArrayStorageTest extends AbstractStorageTest {
+public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     protected AbstractArrayStorageTest(Storage storage) {
         super(storage);

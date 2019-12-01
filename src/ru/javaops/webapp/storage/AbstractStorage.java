@@ -4,6 +4,9 @@ import ru.javaops.webapp.exception.ExistStorageException;
 import ru.javaops.webapp.exception.NotExistStorageException;
 import ru.javaops.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
 
 
@@ -42,6 +45,12 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = doGetAllSorted();
+        Collections.sort(resumes);
+        return resumes;
+    }
+
     protected abstract Resume doGet(Object key);
 
     protected abstract void doSave(Object key, Resume resume);
@@ -49,6 +58,8 @@ public abstract class AbstractStorage implements Storage {
     protected abstract void doUpdate(Object key, Resume resume);
 
     protected abstract void doDelete(Object key);
+
+    protected abstract List<Resume> doGetAllSorted();
 
     protected abstract boolean isExist(Object key);
 

@@ -6,15 +6,17 @@ import ru.javaops.webapp.exception.ExistStorageException;
 import ru.javaops.webapp.exception.NotExistStorageException;
 import ru.javaops.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
 
-    protected Storage storage;
+    Storage storage;
 
-    protected AbstractStorageTest(Storage storage) {
+    AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -67,7 +69,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1, "Full Name");
+        Resume newResume = new Resume(UUID_1, "New Full Name");
         storage.update(newResume);
         assertSame(newResume, storage.get(UUID_1));
     }
@@ -91,10 +93,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() {
         List<Resume> resumes = storage.getAllSorted();
-        assertEquals(3, resumes.size());
-        assertEquals(testResume1, resumes.get(0));
-        assertEquals(testResume2, resumes.get(1));
-        assertEquals(testResume3, resumes.get(2));
+        assertEquals(resumes, new ArrayList<>(Arrays.asList(testResume1, testResume2, testResume3)));
     }
 
     @Test

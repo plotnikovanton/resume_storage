@@ -49,7 +49,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     public int compareTo(Resume o) {
-        int compare = toString().compareTo(o.toString());
+        int compare = fullName.compareTo(o.fullName);
         return compare != 0 ? compare : uuid.compareTo(o.uuid);
     }
 }

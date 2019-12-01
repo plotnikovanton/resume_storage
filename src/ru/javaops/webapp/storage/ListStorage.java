@@ -3,7 +3,6 @@ package ru.javaops.webapp.storage;
 import ru.javaops.webapp.model.Resume;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -11,32 +10,28 @@ public class ListStorage extends AbstractStorage {
     private List<Resume> listStorage = new ArrayList<>();
 
     @Override
-    protected Resume doGet(Object key) {
-        int index = (Integer) key;
-        return listStorage.get(index);
+    protected Resume doGet(Object index) {
+        return listStorage.get((int) index);
     }
 
     @Override
-    protected void doSave(Object key, Resume resume) {
+    protected void doSave(Object index, Resume resume) {
         listStorage.add(resume);
     }
 
     @Override
-    protected void doUpdate(Object key, Resume resume) {
-        int index = (Integer) key;
-        listStorage.set(index, resume);
+    protected void doUpdate(Object index, Resume resume) {
+        listStorage.set((int) index, resume);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        int index = (Integer) key;
-        listStorage.remove(index);
+    protected void doDelete(Object index) {
+        listStorage.remove((int) index);
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        int index = (Integer) key;
-        return index >= 0;
+    protected boolean isExist(Object index) {
+        return (int) index >= 0;
     }
 
     @Override
@@ -55,8 +50,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        Collections.sort(listStorage);
+    public List<Resume> doGetAllSorted() {
         return listStorage;
     }
 

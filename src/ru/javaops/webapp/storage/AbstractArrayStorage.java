@@ -4,7 +4,6 @@ import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.model.Resume;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,41 +20,35 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume doGet(Object key) {
-        int index = (Integer) key;
-        return storage[index];
+    public Resume doGet(Object index) {
+        return storage[(int) index];
     }
 
     @Override
-    public void doSave(Object key, Resume resume) {
-        int index = (Integer) key;
+    public void doSave(Object index, Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertResume(resume, index);
+            insertResume(resume, (int) index);
             size++;
         }
     }
 
     @Override
-    public void doUpdate(Object key, Resume resume) {
-        int index = (Integer) key;
-        storage[index] = resume;
+    public void doUpdate(Object index, Resume resume) {
+        storage[(int) index] = resume;
     }
 
     @Override
-    public void doDelete(Object key) {
-        int index = (Integer) key;
-        removeResume(index);
+    public void doDelete(Object index) {
+        removeResume((int) index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> storageAsList = Arrays.asList(Arrays.copyOfRange(storage, 0, size));
-        Collections.sort(storageAsList);
-        return storageAsList;
+    public List<Resume> doGetAllSorted() {
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override
@@ -65,9 +58,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        int index = (Integer) key;
-        return index >= 0;
+    protected boolean isExist(Object index) {
+        return (int) index >= 0;
     }
 
     protected abstract void insertResume(Resume resume, int index);
