@@ -9,48 +9,6 @@ import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
 
-
-    public Resume get(String uuid) {
-        Object key = getSearchKey(uuid);
-        if (!isExist(key)) {
-            throw new NotExistStorageException(uuid);
-        }
-        return doGet(key);
-    }
-
-    public void save(Resume resume) {
-        Object key = getSearchKey(resume.getUuid());
-        if (isExist(key)) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            doSave(key, resume);
-        }
-    }
-
-    public void update(Resume resume) {
-        Object key = getSearchKey(resume.getUuid());
-        if (!isExist(key)) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            doUpdate(key, resume);
-        }
-    }
-
-    public void delete(String uuid) {
-        Object key = getSearchKey(uuid);
-        if (!isExist(key)) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            doDelete(key);
-        }
-    }
-
-    public List<Resume> getAllSorted() {
-        List<Resume> resumes = doGetAllSorted();
-        Collections.sort(resumes);
-        return resumes;
-    }
-
     protected abstract Resume doGet(Object key);
 
     protected abstract void doSave(Object key, Resume resume);
@@ -64,4 +22,47 @@ public abstract class AbstractStorage implements Storage {
     protected abstract boolean isExist(Object key);
 
     protected abstract Object getSearchKey(String key);
+
+
+    public Resume get(String uuid) {
+        Object key = getExistedKey(uuid);
+        return doGet(key);
+    }
+
+    public void save(Resume resume) {
+        Object key = getNotExistedKey(resume.getUuid());
+        doSave(key, resume);
+    }
+
+    public void update(Resume resume) {
+        Object key = getExistedKey(resume.getUuid());
+        doUpdate(key, resume);
+    }
+
+    public void delete(String uuid) {
+        Object key = getExistedKey(uuid);
+        doDelete(key);
+    }
+
+    public List<Resume> getAllSorted() {
+        List<Resume> resumes = doGetAllSorted();
+        Collections.sort(resumes);
+        return resumes;
+    }
+
+    private Object getExistedKey(String uuid) {
+        Object key = getSearchKey(uuid);
+        if (!isExist(key)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return key;
+    }
+
+    private Object getNotExistedKey(String uuid) {
+        Object key = getSearchKey(uuid);
+        if (isExist(key)) {
+            throw new ExistStorageException(uuid);
+        }
+        return key;
+    }
 }

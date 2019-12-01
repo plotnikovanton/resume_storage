@@ -10,14 +10,20 @@ import java.util.List;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage extends AbstractStorage {
-
     protected final static int STORAGE_LIMIT = 10_000;
+
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     public int size() {
         return size;
     }
+
+    protected abstract void insertResume(Resume resume, int index);
+
+    protected abstract Integer getSearchKey(String key);
+
+    protected abstract void removeResume(int index);
 
     @Override
     public Resume doGet(Object index) {
@@ -61,10 +67,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected boolean isExist(Object index) {
         return (int) index >= 0;
     }
-
-    protected abstract void insertResume(Resume resume, int index);
-
-    protected abstract Integer getSearchKey(String key);
-
-    protected abstract void removeResume(int index);
 }
