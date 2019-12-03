@@ -4,53 +4,53 @@ import ru.javaops.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUuidStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage<String> {
 
-    private Map<String, Resume> mapUiidStorage = new HashMap<>();
+    private Map<String, Resume> mapUuidStorage = new HashMap<>();
 
     @Override
-    protected Resume doGet(Object key) {
-        return mapUiidStorage.get((String) key);
+    protected Resume doGet(String key) {
+        return mapUuidStorage.get(key);
     }
 
     @Override
-    protected void doSave(Object key, Resume resume) {
-        mapUiidStorage.put(resume.getUuid(), resume);
+    protected void doSave(String key, Resume resume) {
+        mapUuidStorage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doUpdate(Object key, Resume resume) {
-        mapUiidStorage.put(resume.getUuid(), resume);
+    protected void doUpdate(String key, Resume resume) {
+        mapUuidStorage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        mapUiidStorage.remove((String) key);
+    protected void doDelete(String key) {
+        mapUuidStorage.remove(key);
     }
 
     @Override
-    protected boolean isExist(Object key) {
+    protected boolean isExist(String key) {
         return key != null;
     }
 
     @Override
     protected String getSearchKey(String uuid) {
-        return mapUiidStorage.containsKey(uuid) ? uuid : null;
+        return mapUuidStorage.containsKey(uuid) ? uuid : null;
     }
 
     @Override
     public int size() {
-        return mapUiidStorage.size();
+        return mapUuidStorage.size();
     }
 
     @Override
     public List<Resume> doGetAllSorted() {
-        return new ArrayList<>(mapUiidStorage.values());
+        return new ArrayList<>(mapUuidStorage.values());
     }
 
     @Override
     public void clear() {
-        mapUiidStorage.clear();
+        mapUuidStorage.clear();
     }
 
 }

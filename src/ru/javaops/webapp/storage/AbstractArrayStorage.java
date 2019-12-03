@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected final static int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -26,28 +26,33 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected abstract void removeResume(int index);
 
     @Override
-    public Resume doGet(Object index) {
-        return storage[(int) index];
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     @Override
-    public void doSave(Object index, Resume resume) {
+    public Resume doGet(Integer index) {
+        return storage[index];
+    }
+
+    @Override
+    public void doSave(Integer index, Resume resume) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         } else {
-            insertResume(resume, (int) index);
+            insertResume(resume, index);
             size++;
         }
     }
 
     @Override
-    public void doUpdate(Object index, Resume resume) {
-        storage[(int) index] = resume;
+    public void doUpdate(Integer index, Resume resume) {
+        storage[index] = resume;
     }
 
     @Override
-    public void doDelete(Object index) {
-        removeResume((int) index);
+    public void doDelete(Integer index) {
+        removeResume(index);
         storage[size - 1] = null;
         size--;
     }
@@ -61,10 +66,5 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    @Override
-    protected boolean isExist(Object index) {
-        return (int) index >= 0;
     }
 }

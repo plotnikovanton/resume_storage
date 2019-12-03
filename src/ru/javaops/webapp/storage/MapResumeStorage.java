@@ -4,32 +4,32 @@ import ru.javaops.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapResumeStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage<Resume> {
 
     private Map<String, Resume> mapResumeStorage = new HashMap<>();
 
     @Override
-    protected Resume doGet(Object key) {
-        return (Resume) key;
+    protected Resume doGet(Resume key) {
+        return key;
     }
 
     @Override
-    protected void doSave(Object key, Resume resume) {
+    protected void doSave(Resume key, Resume resume) {
         mapResumeStorage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doUpdate(Object key, Resume resume) {
+    protected void doUpdate(Resume key, Resume resume) {
         mapResumeStorage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        mapResumeStorage.remove(((Resume) key).getUuid());
+    protected void doDelete(Resume key) {
+        mapResumeStorage.remove(key.getUuid());
     }
 
     @Override
-    protected boolean isExist(Object key) {
+    protected boolean isExist(Resume key) {
         return key != null;
     }
 

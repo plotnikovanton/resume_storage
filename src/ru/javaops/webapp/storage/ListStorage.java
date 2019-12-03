@@ -5,34 +5,9 @@ import ru.javaops.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private List<Resume> listStorage = new ArrayList<>();
-
-    @Override
-    protected Resume doGet(Object index) {
-        return listStorage.get((int) index);
-    }
-
-    @Override
-    protected void doSave(Object index, Resume resume) {
-        listStorage.add(resume);
-    }
-
-    @Override
-    protected void doUpdate(Object index, Resume resume) {
-        listStorage.set((int) index, resume);
-    }
-
-    @Override
-    protected void doDelete(Object index) {
-        listStorage.remove((int) index);
-    }
-
-    @Override
-    protected boolean isExist(Object index) {
-        return (int) index >= 0;
-    }
 
     @Override
     protected Integer getSearchKey(String uuid) {
@@ -42,6 +17,31 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return -1;
+    }
+
+    @Override
+    protected boolean isExist(Integer index) {
+        return index >= 0;
+    }
+
+    @Override
+    protected Resume doGet(Integer index) {
+        return listStorage.get(index);
+    }
+
+    @Override
+    protected void doSave(Integer index, Resume resume) {
+        listStorage.add(resume);
+    }
+
+    @Override
+    protected void doUpdate(Integer index, Resume resume) {
+        listStorage.set(index, resume);
+    }
+
+    @Override
+    protected void doDelete(Integer index) {
+        listStorage.remove(index.intValue());
     }
 
     @Override

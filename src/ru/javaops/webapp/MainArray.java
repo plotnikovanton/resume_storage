@@ -51,7 +51,7 @@ public class MainArray {
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.doGet(arg));
+                    System.out.println(ARRAY_STORAGE.get(arg));
                     break;
                 case "clear":
                     ARRAY_STORAGE.clear();
