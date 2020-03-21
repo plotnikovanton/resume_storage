@@ -1,5 +1,7 @@
 package ru.javaops.webapp.model;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -11,6 +13,8 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private String uuid;
     private String fullName;
+    private Map<ContactType, String> contacts = new HashMap();
+    private Map<SectionType, Section> sections = new HashMap<>();
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -29,6 +33,14 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
+    public void setContacts(ContactType type, String contact) {
+        contacts.put(type, contact);
+    }
+
+    public void setSections(SectionType type, Section section) {
+        sections.put(type, section);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +57,15 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return fullName;
+        StringBuilder sb = new StringBuilder(fullName + "\n");
+        for (String contact : contacts.values()) {
+            sb.append(contact).append("\n");
+        }
+
+        for (Section section : sections.values()) {
+            sb.append(section).append("\n");
+        }
+        return sb.toString();
     }
 
     public int compareTo(Resume o) {
