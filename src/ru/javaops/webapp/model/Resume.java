@@ -34,12 +34,12 @@ public class Resume implements Comparable<Resume> {
         return fullName;
     }
 
-    public Map<ContactType, String> getContacts() {
-        return contacts;
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
-    public Map<SectionType, Section> getSections() {
-        return sections;
+    public Section getSection(SectionType type) {
+        return sections.get(type);
     }
 
     public void setContacts(ContactType type, String contact) {

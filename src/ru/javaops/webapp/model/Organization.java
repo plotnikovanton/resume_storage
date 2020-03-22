@@ -4,33 +4,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Organization {
-    private final String name;
-    private final String link;
+    private final Link homepage;
     private final LocalDate dateOfEntering;
     private final LocalDate dateOfLeaving;
     private final String position;
     private final String description;
 
-    public Organization(String name, String link, LocalDate dateOfEntering,
+    public Organization(String name, String url, LocalDate dateOfEntering,
                         LocalDate dateOfLeaving, String position, String description) {
-        Objects.requireNonNull(name, "Name must not be null");
         Objects.requireNonNull(dateOfEntering, "Start date must not be null");
         Objects.requireNonNull(dateOfLeaving, "End date must not be null");
         Objects.requireNonNull(position, "Position must not be null");
-        this.name = name;
-        this.link = link;
+        this.homepage = new Link(name, url);
         this.dateOfEntering = dateOfEntering;
         this.dateOfLeaving = dateOfLeaving;
         this.position = position;
         this.description = description;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getLink() {
-        return link;
+    public Link getHomepage() {
+        return homepage;
     }
 
     public LocalDate getDateOfEntering() {
@@ -51,25 +44,36 @@ public class Organization {
 
     @Override
     public String toString() {
-        return name + "; " + link + "; " + dateOfEntering + "; " + dateOfLeaving + "; " +
-                position + "; " + description;
+        return "Organization{" +
+                "homepage=" + homepage +
+                ", dateOfEntering=" + dateOfEntering +
+                ", dateOfLeaving=" + dateOfLeaving +
+                ", position='" + position + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Organization that = (Organization) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(link, that.link) &&
-                Objects.equals(dateOfEntering, that.dateOfEntering) &&
-                Objects.equals(dateOfLeaving, that.dateOfLeaving) &&
-                Objects.equals(position, that.position) &&
-                Objects.equals(description, that.description);
+
+        if (!homepage.equals(that.homepage)) return false;
+        if (!dateOfEntering.equals(that.dateOfEntering)) return false;
+        if (!dateOfLeaving.equals(that.dateOfLeaving)) return false;
+        if (!position.equals(that.position)) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, link, dateOfEntering, dateOfLeaving, position, description);
+        int result = homepage.hashCode();
+        result = 31 * result + dateOfEntering.hashCode();
+        result = 31 * result + dateOfLeaving.hashCode();
+        result = 31 * result + position.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 }

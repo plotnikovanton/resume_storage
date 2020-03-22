@@ -2,7 +2,6 @@ package ru.javaops.webapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ExperienceSection extends Section {
     private final List<Organization> organizations;
@@ -32,12 +31,14 @@ public class ExperienceSection extends Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         ExperienceSection that = (ExperienceSection) o;
-        return Objects.equals(organizations, that.organizations);
+
+        return organizations != null ? organizations.equals(that.organizations) : that.organizations == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizations);
+        return organizations != null ? organizations.hashCode() : 0;
     }
 }
