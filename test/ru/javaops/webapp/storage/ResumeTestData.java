@@ -1,16 +1,11 @@
-package ru.javaops.webapp;
+package ru.javaops.webapp.storage;
 
 import ru.javaops.webapp.model.*;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 
 public class ResumeTestData {
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) {
         Resume resume = new Resume("Григорий Кислин");
 
         resume.setContacts(ContactType.PHONENUMBER, "+7(921) 855-0482");
@@ -73,30 +68,19 @@ public class ResumeTestData {
         qualifications.setItem("Родной русский, английский \"upper intermediate\"");
         resume.setSections(SectionType.QUALIFICATIONS, qualifications);
 
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern("MM/yyyy")
-                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1).toFormatter();
+        Organization jop = new Organization("Java Online Projects", "http://javaops.ru/",
+                LocalDate.of(2013, 10, 1), LocalDate.now(), "Автор проекта",
+                "Создание, организация и проведение Java онлайн проектов и стажировок.");
 
-        Organization jop = new Organization("Java Online Projects");
-        jop.setLink(new URL("http://javaops.ru/"));
-        jop.setDateOfEntering(LocalDate.parse("10/2013", formatter));
-        jop.setDateOfLeaving(LocalDate.now());
-        jop.setPosition("Автор проекта");
-        jop.setDescription("Создание, организация и проведение Java онлайн проектов и стажировок.");
-
-        Organization wrike = new Organization("Wrike");
-        wrike.setLink(new URL("https://www.wrike.com/"));
-        wrike.setDateOfEntering(LocalDate.parse("10/2014", formatter));
-        wrike.setDateOfLeaving(LocalDate.parse("01/2016", formatter));
-        wrike.setPosition("Старший разработчик (backend)");
-        wrike.setDescription("Проектирование и разработка онлайн платформы управления проектами Wrike " +
-                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+        Organization wrike = new Organization("Wrike", "https://www.wrike.com/",
+                LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1),
+                "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы " +
+                "управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                 "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
 
-        Organization ritCenter = new Organization("RIT Center");
-        ritCenter.setDateOfEntering(LocalDate.parse("04/2012", formatter));
-        ritCenter.setDateOfLeaving(LocalDate.parse("10/2014", formatter));
-        ritCenter.setPosition("Java архитектор");
-        ritCenter.setDescription("Организация процесса разработки системы ERP для разных окружений: " +
+        Organization ritCenter = new Organization("RIT Center", "https://www.rit.edu/",
+                LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1),
+                "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: " +
                 "релизная политика, версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), " +
                 "конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. " +
                 "Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения " +
@@ -104,50 +88,38 @@ public class ResumeTestData {
                 "документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, Spring MVC, " +
                 "Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python");
 
-        Organization luxoft = new Organization("Luxoft (Deuche Bank)");
-        luxoft.setLink(new URL("http://www.luxoft.ru/"));
-        luxoft.setDateOfEntering(LocalDate.parse("12/2010", formatter));
-        luxoft.setDateOfLeaving(LocalDate.parse("04/2012", formatter));
-        luxoft.setPosition("Ведущий программист");
-        luxoft.setDescription("Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, " +
-                "SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. " +
-                "Реализация RIA-приложения для администрирования, мониторинга и анализа результатов " +
-                "в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), " +
-                "Highstock, Commet, HTML5.");
+        Organization luxoft = new Organization("Luxoft (Deuche Bank)", "http://www.luxoft.ru/",
+                LocalDate.of(2010, 12, 1), LocalDate.of(2012, 4, 1),
+                "Ведущий программист",
+                "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, " +
+                        "SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. " +
+                        "Реализация RIA-приложения для администрирования, мониторинга и анализа результатов " +
+                        "в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), " +
+                        "Highstock, Commet, HTML5.");
 
-        Organization yota = new Organization("Yota");
-        yota.setLink(new URL("https://www.yota.ru/"));
-        yota.setDateOfEntering(LocalDate.parse("06/2008", formatter));
-        yota.setDateOfLeaving(LocalDate.parse("12/2010", formatter));
-        yota.setPosition("Ведущий специалист");
-        yota.setDescription("Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" " +
-                "(GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). " +
-                "Реализация администрирования, статистики и мониторинга фреймворка. " +
-                "Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
+        Organization yota = new Organization("Yota", "https://www.yota.ru/",
+                LocalDate.of(2008, 6, 1), LocalDate.of(2010, 12, 1),
+                "Ведущий специалист",
+                "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" " +
+                        "(GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). " +
+                        "Реализация администрирования, статистики и мониторинга фреймворка. " +
+                        "Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
 
-        Organization enkata = new Organization("Enkata");
-        enkata.setLink(new URL("http://enkata.com/"));
-        enkata.setDateOfEntering(LocalDate.parse("02/2007", formatter));
-        enkata.setDateOfLeaving(LocalDate.parse("06/2008", formatter));
-        enkata.setPosition("Разработчик ПО");
-        enkata.setDescription("Реализация клиентской (Eclipse RCP) и серверной " +
+        Organization enkata = new Organization("Enkata", "http://enkata.com/",
+                LocalDate.of(2007, 2, 1), LocalDate.of(2008, 6, 1),
+                "Разработчик ПО", "Реализация клиентской (Eclipse RCP) и серверной " +
                 "(JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).");
 
-        Organization siemens = new Organization("Siemens AG");
-        siemens.setLink(new URL("https://www.siemens.com/ru/ru/home.html"));
-        siemens.setDateOfEntering(LocalDate.parse("01/2005", formatter));
-        siemens.setDateOfLeaving(LocalDate.parse("02/2007", formatter));
-        siemens.setPosition("Разработчик ПО");
-        siemens.setDescription("Разработка информационной модели, проектирование интерфейсов, " +
+        Organization siemens = new Organization("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
+                LocalDate.of(2995, 1, 1), LocalDate.of(2007, 2, 1),
+                "Разработчик ПО", "Разработка информационной модели, проектирование интерфейсов, " +
                 "реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).");
 
-        Organization alcatel = new Organization("Alcatel");
-        alcatel.setLink(new URL("http://www.alcatel.ru/"));
-        alcatel.setDateOfEntering(LocalDate.parse("09/1997", formatter));
-        alcatel.setDateOfLeaving(LocalDate.parse("01/2005", formatter));
-        alcatel.setPosition("Инженер по аппаратному и программному тестированию");
-        alcatel.setDescription("Тестирование, отладка, внедрение ПО цифровой телефонной станции " +
-                "Alcatel 1000 S12 (CHILL, ASM).");
+        Organization alcatel = new Organization("Alcatel", "http://www.alcatel.ru/",
+                LocalDate.of(1997, 9, 1), LocalDate.of(2005, 1, 1),
+                "Инженер по аппаратному и программному тестированию",
+                "Тестирование, отладка, внедрение ПО цифровой телефонной станции " +
+                        "Alcatel 1000 S12 (CHILL, ASM).");
 
         ExperienceSection workExperience = new ExperienceSection();
         workExperience.setOrganizations(jop);
@@ -160,49 +132,35 @@ public class ResumeTestData {
 
         resume.setSections(SectionType.EXPERIENCE, workExperience);
 
-        Organization coursera = new Organization("Coursera");
-        coursera.setLink(new URL("https://www.coursera.org/course/progfun"));
-        coursera.setDateOfEntering(LocalDate.parse("03/2013", formatter));
-        coursera.setDateOfLeaving(LocalDate.parse("05/2013", formatter));
-        coursera.setDescription("\"Functional Programming Principles in Scala\" by Martin Odersky");
+        Organization coursera = new Organization("Coursera", "https://www.coursera.org/course/progfun",
+                LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1),
+                "Учащийся", "\"Functional Programming Principles in Scala\" by Martin Odersky");
 
-        Organization luxoftStudy = new Organization("Luxoft");
-        luxoftStudy.setLink(new URL("http://www.luxoft-training.ru/training/catalog/course.html?ID=22366"));
-        luxoftStudy.setDateOfEntering(LocalDate.parse("03/2011", formatter));
-        luxoftStudy.setDateOfLeaving(LocalDate.parse("04/2011", formatter));
-        luxoftStudy.setDescription("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
+        Organization luxoftStudy = new Organization("Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
+                LocalDate.of(20011, 3, 1), LocalDate.of(2011, 4, 1),
+                "Учащийся", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
 
-        Organization siemensStudy = new Organization("Siemens AG");
-        siemensStudy.setLink(new URL("http://www.siemens.ru/"));
-        siemensStudy.setDateOfEntering(LocalDate.parse("01/2005", formatter));
-        siemensStudy.setDateOfLeaving(LocalDate.parse("04/2005", formatter));
-        siemensStudy.setDescription("3 месяца обучения мобильным IN сетям (Берлин)");
+        Organization siemensStudy = new Organization("Siemens AG", "http://www.siemens.ru/",
+                LocalDate.of(2005, 1, 1), LocalDate.of(2005, 4, 1),
+                "Учащийся", "3 месяца обучения мобильным IN сетям (Берлин)");
 
-        Organization alcatelStudy = new Organization("Alcatel");
-        alcatelStudy.setLink(new URL("http://www.alcatel.ru/"));
-        alcatelStudy.setDateOfEntering(LocalDate.parse("09/1997", formatter));
-        alcatelStudy.setDateOfLeaving(LocalDate.parse("03/1998", formatter));
-        alcatelStudy.setDescription("6 месяцев обучения цифровым телефонным сетям (Москва)");
+        Organization alcatelStudy = new Organization("Alcatel", "http://www.alcatel.ru/",
+                LocalDate.of(1997, 9, 1), LocalDate.of(1998, 3, 1),
+                "Учащийся", "6 месяцев обучения цифровым телефонным сетям (Москва)");
 
         Organization itmoAsp = new Organization("Санкт-Петербургский национальный исследовательский университет " +
-                "информационных технологий, механики и оптики");
-        itmoAsp.setLink(new URL("http://www.ifmo.ru/"));
-        itmoAsp.setDateOfEntering(LocalDate.parse("09/1993", formatter));
-        itmoAsp.setDateOfLeaving(LocalDate.parse("07/1996", formatter));
-        itmoAsp.setDescription("Аспирантура (программист С, С++)");
+                "информационных технологий, механики и оптики", "http://www.ifmo.ru/",
+                LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1),
+                "Учащийся", "Аспирантура (программист С, С++)");
 
         Organization itmoEng = new Organization("Санкт-Петербургский национальный исследовательский университет " +
-                "информационных технологий, механики и оптики");
-        itmoEng.setLink(new URL("http://www.ifmo.ru/"));
-        itmoEng.setDateOfEntering(LocalDate.parse("09/1987", formatter));
-        itmoEng.setDateOfLeaving(LocalDate.parse("07/1993", formatter));
-        itmoEng.setDescription("Инженер (программист Fortran, C)");
+                "информационных технологий, механики и оптики", "http://www.ifmo.ru/",
+                LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1),
+                "Учащийся", "Инженер (программист Fortran, C)");
 
-        Organization mfti = new Organization("Заочная физико-техническая школа при МФТИ");
-        mfti.setLink(new URL("http://www.school.mipt.ru/"));
-        mfti.setDateOfEntering(LocalDate.parse("09/1984", formatter));
-        mfti.setDateOfLeaving(LocalDate.parse("06/1987", formatter));
-        mfti.setDescription("Закончил с отличием");
+        Organization mfti = new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
+                LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1),
+                "Учащийся", "Закончил с отличием");
 
         ExperienceSection studyExperience = new ExperienceSection();
         studyExperience.setOrganizations(coursera);

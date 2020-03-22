@@ -1,5 +1,7 @@
 package ru.javaops.webapp.model;
 
+import java.util.Objects;
+
 public enum ContactType {
     PHONENUMBER("Телефон"),
     SKYPE("Skype"),
@@ -9,9 +11,10 @@ public enum ContactType {
     STACKOVERFLOW("Профиль Stackoverflow"),
     WEBPAGE("Домашняя страница");
 
-    private String title;
+    private final String title;
 
     ContactType(String title) {
+        Objects.requireNonNull(title, "Title must not be null");
         this.title = title;
     }
 

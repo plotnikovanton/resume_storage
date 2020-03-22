@@ -2,9 +2,14 @@ package ru.javaops.webapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ExperienceSection extends Section {
-    private List<Organization> organizations = new ArrayList<>();
+    private final List<Organization> organizations;
+
+    public ExperienceSection() {
+        organizations = new ArrayList<>();
+    }
 
     public List<Organization> getOrganizations() {
         return organizations;
@@ -16,10 +21,23 @@ public class ExperienceSection extends Section {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (Organization org : organizations) {
-            s.append(org.toString()).append("\n");
+            sb.append(org.toString()).append("\n");
         }
-        return s.toString();
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExperienceSection that = (ExperienceSection) o;
+        return Objects.equals(organizations, that.organizations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(organizations);
     }
 }
