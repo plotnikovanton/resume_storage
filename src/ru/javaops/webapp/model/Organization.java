@@ -14,11 +14,9 @@ public class Organization {
     public Organization(String name, String link, LocalDate dateOfEntering,
                         LocalDate dateOfLeaving, String position, String description) {
         Objects.requireNonNull(name, "Name must not be null");
-        Objects.requireNonNull(link, "Link must not be null");
         Objects.requireNonNull(dateOfEntering, "Start date must not be null");
         Objects.requireNonNull(dateOfLeaving, "End date must not be null");
         Objects.requireNonNull(position, "Position must not be null");
-        Objects.requireNonNull(description, "Description must not be null");
         this.name = name;
         this.link = link;
         this.dateOfEntering = dateOfEntering;
