@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Organization {
-    private final Link homepage;
+    private final Link homePage;
     private final LocalDate dateOfEntering;
     private final LocalDate dateOfLeaving;
     private final String position;
@@ -15,15 +15,15 @@ public class Organization {
         Objects.requireNonNull(dateOfEntering, "Start date must not be null");
         Objects.requireNonNull(dateOfLeaving, "End date must not be null");
         Objects.requireNonNull(position, "Position must not be null");
-        this.homepage = new Link(name, url);
+        this.homePage = new Link(name, url);
         this.dateOfEntering = dateOfEntering;
         this.dateOfLeaving = dateOfLeaving;
         this.position = position;
         this.description = description;
     }
 
-    public Link getHomepage() {
-        return homepage;
+    public Link getHomePage() {
+        return homePage;
     }
 
     public LocalDate getDateOfEntering() {
@@ -45,7 +45,7 @@ public class Organization {
     @Override
     public String toString() {
         return "Organization{" +
-                "homepage=" + homepage +
+                "homepage=" + homePage +
                 ", dateOfEntering=" + dateOfEntering +
                 ", dateOfLeaving=" + dateOfLeaving +
                 ", position='" + position + '\'' +
@@ -60,7 +60,7 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (!homepage.equals(that.homepage)) return false;
+        if (!homePage.equals(that.homePage)) return false;
         if (!dateOfEntering.equals(that.dateOfEntering)) return false;
         if (!dateOfLeaving.equals(that.dateOfLeaving)) return false;
         if (!position.equals(that.position)) return false;
@@ -69,7 +69,7 @@ public class Organization {
 
     @Override
     public int hashCode() {
-        int result = homepage.hashCode();
+        int result = homePage.hashCode();
         result = 31 * result + dateOfEntering.hashCode();
         result = 31 * result + dateOfLeaving.hashCode();
         result = 31 * result + position.hashCode();
