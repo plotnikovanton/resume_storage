@@ -1,55 +1,30 @@
 package ru.javaops.webapp.model;
 
-import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
 
 public class Organization {
     private final Link homePage;
-    private final LocalDate dateOfEntering;
-    private final LocalDate dateOfLeaving;
-    private final String position;
-    private final String description;
+    private List<Period> periods;
 
-    public Organization(String name, String url, LocalDate dateOfEntering,
-                        LocalDate dateOfLeaving, String position, String description) {
-        Objects.requireNonNull(dateOfEntering, "Start date must not be null");
-        Objects.requireNonNull(dateOfLeaving, "End date must not be null");
-        Objects.requireNonNull(position, "Position must not be null");
+    public Organization(String name, String url, Period... periods) {
         this.homePage = new Link(name, url);
-        this.dateOfEntering = dateOfEntering;
-        this.dateOfLeaving = dateOfLeaving;
-        this.position = position;
-        this.description = description;
+        this.periods = Arrays.asList(periods);
     }
 
     public Link getHomePage() {
         return homePage;
     }
 
-    public LocalDate getDateOfEntering() {
-        return dateOfEntering;
-    }
-
-    public LocalDate getDateOfLeaving() {
-        return dateOfLeaving;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public String getDescription() {
-        return description;
+    public List<Period> getPeriods() {
+        return periods;
     }
 
     @Override
     public String toString() {
         return "Organization{" +
-                "homepage=" + homePage +
-                ", dateOfEntering=" + dateOfEntering +
-                ", dateOfLeaving=" + dateOfLeaving +
-                ", position='" + position + '\'' +
-                ", description='" + description + '\'' +
+                "homePage=" + homePage +
+                ", periods=" + periods +
                 '}';
     }
 
@@ -61,19 +36,13 @@ public class Organization {
         Organization that = (Organization) o;
 
         if (!homePage.equals(that.homePage)) return false;
-        if (!dateOfEntering.equals(that.dateOfEntering)) return false;
-        if (!dateOfLeaving.equals(that.dateOfLeaving)) return false;
-        if (!position.equals(that.position)) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
+        return periods.equals(that.periods);
     }
 
     @Override
     public int hashCode() {
         int result = homePage.hashCode();
-        result = 31 * result + dateOfEntering.hashCode();
-        result = 31 * result + dateOfLeaving.hashCode();
-        result = 31 * result + position.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + periods.hashCode();
         return result;
     }
 }

@@ -5,6 +5,8 @@ import ru.javaops.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +24,12 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
+    protected abstract void doWrite(File file, Resume resume) throws IOException;
+
+    protected abstract Resume doRead(File file) throws IOException;
+
+    protected abstract List<Resume> getAllSortedFiles(File[] list);
+
     @Override
     protected File getSearchKey(String uuid) {
         return new File(directory, uuid);
@@ -34,7 +42,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected Resume doGet(File file) {
-        return null;
+        try {
+            return doRead(file);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
@@ -47,30 +59,45 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected abstract void doWrite(File file, Resume resume) throws IOException;
-
     @Override
     protected void doUpdate(File file, Resume resume) {
-
+        try {
+            doWrite(file, resume);
+        } catch (IOException e) {
+            throw new StorageException("IO error", file.getName(), e);
+        }
     }
 
     @Override
     protected void doDelete(File file) {
-
+        file.delete();
     }
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        return null;
+        List<Resume> resumes = new ArrayList<>();
+        File[] files = directory.listFiles();
+        if (files != null) {
+            Arrays.sort(files);
+            for (File file : files) {
+                resumes.add(doGet(file));
+            }
+        }
+        return resumes;
     }
 
     @Override
     public int size() {
-        return 0;
+        return directory.listFiles().length;
     }
 
     @Override
     public void clear() {
-
+        File[] resumes = directory.listFiles();
+        if (resumes != null) {
+            for (File resume : resumes) {
+                resume.delete();
+            }
+        }
     }
 }

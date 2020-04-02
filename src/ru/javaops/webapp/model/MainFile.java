@@ -29,6 +29,25 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        String projectPath = "C:\\Users\\plotn\\IdeaProjects\\basejava";
+        recursivelyListFiles(projectPath);
+    }
+
+    static void recursivelyListFiles(String path) {
+        File root = new File(path);
+        File[] list = root.listFiles();
+
+        if (list != null) {
+            for (File file : list) {
+                if (file.isDirectory()) {
+                    System.out.println(file.getAbsolutePath());
+                    recursivelyListFiles(file.getAbsolutePath());
+                } else {
+                    System.out.println(file.getAbsoluteFile());
+                }
+            }
+        }
     }
 }
 
