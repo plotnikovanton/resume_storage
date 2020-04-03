@@ -36,6 +36,28 @@ public class Period {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Period period = (Period) o;
+
+        if (!startDate.equals(period.startDate)) return false;
+        if (!endDate.equals(period.endDate)) return false;
+        if (!title.equals(period.title)) return false;
+        return description != null ? description.equals(period.description) : period.description == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startDate.hashCode();
+        result = 31 * result + endDate.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "Period{" +
                 "startDate=" + startDate +

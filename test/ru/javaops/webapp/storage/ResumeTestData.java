@@ -8,7 +8,7 @@ import java.time.Month;
 
 public class ResumeTestData {
     public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+        Resume resume = AbstractStorageTest.testResume1;
 
         resume.setContact(ContactType.PHONENUMBER, "+7(921) 855-0482");
         resume.setContact(ContactType.SKYPE, "grigory.kislin");

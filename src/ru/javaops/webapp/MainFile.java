@@ -1,4 +1,4 @@
-package ru.javaops.webapp.model;
+package ru.javaops.webapp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,21 +30,19 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        String projectPath = "C:\\Users\\plotn\\IdeaProjects\\basejava";
-        recursivelyListFiles(projectPath);
+        recursivelyListFiles(new File("C:\\Users\\plotn\\IdeaProjects\\basejava"));
     }
 
-    static void recursivelyListFiles(String path) {
-        File root = new File(path);
+    static void recursivelyListFiles(File root) {
         File[] list = root.listFiles();
 
         if (list != null) {
             for (File file : list) {
                 if (file.isDirectory()) {
-                    System.out.println(file.getAbsolutePath());
-                    recursivelyListFiles(file.getAbsolutePath());
+                    System.out.println(file.getName());
+                    recursivelyListFiles(file);
                 } else {
-                    System.out.println(file.getAbsoluteFile());
+                    System.out.println(file.getName());
                 }
             }
         }

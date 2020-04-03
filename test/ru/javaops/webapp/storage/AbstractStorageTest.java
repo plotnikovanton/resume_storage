@@ -25,10 +25,17 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final Resume testResume1 = new Resume(UUID_1, "Full Name");
-    private static final Resume testResume2 = new Resume(UUID_2, "Full Name");
-    private static final Resume testResume3 = new Resume(UUID_3, "Full Name");
-    private static final Resume testResume4 = new Resume(UUID_4, "Full Name");
+    protected static final Resume testResume1;
+    private static final Resume testResume2;
+    private static final Resume testResume3;
+    private static final Resume testResume4;
+
+    static {
+        testResume1 = new Resume(UUID_1, "Full Name");
+        testResume2 = new Resume(UUID_2, "Full Name");
+        testResume3 = new Resume(UUID_3, "Full Name");
+        testResume4 = new Resume(UUID_4, "Full Name");
+    }
 
     @Before
     public void setUp() {

@@ -6,7 +6,6 @@ import ru.javaops.webapp.model.Resume;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,8 +26,6 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected abstract void doWrite(File file, Resume resume) throws IOException;
 
     protected abstract Resume doRead(File file) throws IOException;
-
-    protected abstract List<Resume> getAllSortedFiles(File[] list);
 
     @Override
     protected File getSearchKey(String uuid) {
@@ -53,10 +50,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(File file, Resume resume) {
         try {
             file.createNewFile();
-            doWrite(file, resume);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(file, resume);
     }
 
     @Override
@@ -70,7 +67,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("IO error", file.getName());
+        }
     }
 
     @Override
@@ -78,26 +77,32 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         List<Resume> resumes = new ArrayList<>();
         File[] files = directory.listFiles();
         if (files != null) {
-            Arrays.sort(files);
             for (File file : files) {
                 resumes.add(doGet(file));
             }
+        } else {
+            throw new StorageException("IO error", directory.getName());
         }
         return resumes;
     }
 
     @Override
     public int size() {
-        return directory.listFiles().length;
+        if (directory.list() == null) {
+            throw new StorageException("IO error", directory.getName());
+        }
+        return directory.list().length;
     }
 
     @Override
     public void clear() {
         File[] resumes = directory.listFiles();
         if (resumes != null) {
-            for (File resume : resumes) {
-                resume.delete();
+            for (File file : resumes) {
+                doDelete(file);
             }
+        } else {
+            throw new StorageException("IO error", directory.getName());
         }
     }
 }
