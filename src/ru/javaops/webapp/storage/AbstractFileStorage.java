@@ -88,10 +88,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        if (directory.list() == null) {
+        String[] names = directory.list();
+        if (names == null) {
             throw new StorageException("IO error", directory.getName());
         }
-        return directory.list().length;
+        return names.length;
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static ru.javaops.webapp.storage.ResumeTestData.*;
 
 public abstract class AbstractStorageTest {
 
@@ -25,17 +26,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    protected static final Resume testResume1;
-    private static final Resume testResume2;
-    private static final Resume testResume3;
-    private static final Resume testResume4;
-
-    static {
-        testResume1 = new Resume(UUID_1, "Full Name");
-        testResume2 = new Resume(UUID_2, "Full Name");
-        testResume3 = new Resume(UUID_3, "Full Name");
-        testResume4 = new Resume(UUID_4, "Full Name");
-    }
+    private static final Resume testResume1 = testDataResume1;
+    private static final Resume testResume2 = testDataResume2;
+    private static final Resume testResume3 = testDataResume3;
+    private static final Resume testResume4 = testDataResume4;
 
     @Before
     public void setUp() {
