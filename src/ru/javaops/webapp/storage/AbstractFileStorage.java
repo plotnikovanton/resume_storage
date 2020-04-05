@@ -42,7 +42,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             return doRead(file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("File read error", file.getName(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Couldn't create file " + file.getAbsolutePath(), file.getName(), e);
         }
         doUpdate(file, resume);
     }
@@ -61,28 +61,27 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             doWrite(file, resume);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("File write error", resume.getUuid(), e);
         }
     }
 
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
-            throw new StorageException("IO error", file.getName());
+            throw new StorageException("File delete error", file.getName());
         }
     }
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        List<Resume> resumes = new ArrayList<>();
         File[] files = directory.listFiles();
-        if (files != null) {
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        List<Resume> resumes = new ArrayList<>(files.length);
             for (File file : files) {
                 resumes.add(doGet(file));
             }
-        } else {
-            throw new StorageException("IO error", directory.getName());
-        }
         return resumes;
     }
 
@@ -90,7 +89,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     public int size() {
         String[] names = directory.list();
         if (names == null) {
-            throw new StorageException("IO error", directory.getName());
+            throw new StorageException("IO error", null);
         }
         return names.length;
     }

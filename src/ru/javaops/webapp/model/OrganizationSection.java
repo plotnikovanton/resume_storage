@@ -1,13 +1,19 @@
 package ru.javaops.webapp.model;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
-public class ExperienceSection extends Section {
+public class OrganizationSection extends Section {
     private final List<Organization> organizations;
 
-    public ExperienceSection() {
-        organizations = new ArrayList<>();
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
+    }
+
+    public OrganizationSection(List<Organization> organizations) {
+        Objects.requireNonNull(organizations, "organizations must not be null");
+        this.organizations = organizations;
     }
 
     public List<Organization> getOrganizations() {
@@ -32,7 +38,7 @@ public class ExperienceSection extends Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExperienceSection that = (ExperienceSection) o;
+        OrganizationSection that = (OrganizationSection) o;
 
         return organizations != null ? organizations.equals(that.organizations) : that.organizations == null;
     }
