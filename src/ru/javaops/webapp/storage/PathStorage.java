@@ -2,6 +2,7 @@ package ru.javaops.webapp.storage;
 
 import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.model.Resume;
+import ru.javaops.webapp.storage.serialization.SerializationStrategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -9,9 +10,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
@@ -76,34 +77,24 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> doGetAllSorted() {
-        Stream<Path> files;
-        try {
-            files = Files.list(directory);
-        } catch (IOException e) {
-            throw new StorageException("Directory read error", null);
-        }
-        List<Resume> resumes = new ArrayList<>();
-        files.forEach(file -> resumes.add(doGet(file)));
-        return resumes;
+        return streamDirectory().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
     public int size() {
-        Stream<Path> files;
-        try {
-            files = Files.list(directory);
-        } catch (IOException e) {
-            throw new StorageException("Directory read error", null, e);
-        }
-        return files.toArray().length;
+        return (int) streamDirectory().count();
     }
 
     @Override
     public void clear() {
+        streamDirectory().forEach(this::doDelete);
+    }
+
+    private Stream<Path> streamDirectory() {
         try {
-            Files.list(directory).forEach(this::doDelete);
+            return Files.list(directory);
         } catch (IOException e) {
-            throw new StorageException("Path delete error", null, e);
+            throw new StorageException("Directory read error", null, e);
         }
     }
 }

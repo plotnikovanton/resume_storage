@@ -1,11 +1,11 @@
-package ru.javaops.webapp.storage;
+package ru.javaops.webapp.storage.serialization;
 
 import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.model.Resume;
 
 import java.io.*;
 
-public class ObjectStreamStorage implements SerializationStrategy {
+public class ObjectStream implements SerializationStrategy {
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
