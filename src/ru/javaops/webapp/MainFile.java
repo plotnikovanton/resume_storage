@@ -30,20 +30,28 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 
-        recursivelyListFiles(new File("C:\\Users\\plotn\\IdeaProjects\\basejava"));
+        printFiles(new File("C:\\Users\\plotn\\IdeaProjects\\basejava"));
     }
 
-    static void recursivelyListFiles(File root) {
-        File[] list = root.listFiles();
+    public static void printFiles(File root) {
+        if (root.exists()) {
+            printContent(root, 0);
+        } else {
+            System.out.println("Directory is not found");
+        }
+    }
 
-        if (list != null) {
-            for (File file : list) {
-                if (file.isDirectory()) {
-                    System.out.println("Directory " + file.getName());
-                    recursivelyListFiles(file);
-                } else {
-                    System.out.println("File " + file.getName());
-                }
+    public static void printContent(File file, int intend) {
+        for (int i = 0; i < intend; i++) {
+            System.out.print("\t");
+        }
+        if (file.isFile()) {
+            System.out.println("File " + file.getName());
+        } else {
+            System.out.println("Directory " + file.getName());
+            File[] list = file.listFiles();
+            for (File f : list) {
+                printContent(f, intend + 1);
             }
         }
     }
