@@ -2,7 +2,7 @@ package ru.javaops.webapp.storage;
 
 import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.model.Resume;
-import ru.javaops.webapp.storage.serialization.SerializationStrategy;
+import ru.javaops.webapp.storage.serializer.StreamSerializer;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,17 +11,18 @@ import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    private final SerializationStrategy strategy;
+    private final StreamSerializer strategy;
 
-    protected FileStorage(File directory, SerializationStrategy strategy) {
+    protected FileStorage(File directory, StreamSerializer strategy) {
         Objects.requireNonNull(directory, "directory must not be null");
+
+        this.strategy = strategy;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
         }
         if (!directory.canRead() || !directory.canWrite()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
-        this.strategy = strategy;
         this.directory = directory;
     }
 
@@ -74,7 +75,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> doGetAllSorted() {
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new StorageException("Directory read error", null);
+            throw new StorageException("Directory read error");
         }
         List<Resume> resumes = new ArrayList<>(files.length);
         for (File file : files) {
@@ -87,7 +88,7 @@ public class FileStorage extends AbstractStorage<File> {
     public int size() {
         String[] names = directory.list();
         if (names == null) {
-            throw new StorageException("IO error", null);
+            throw new StorageException("IO error");
         }
         return names.length;
     }
