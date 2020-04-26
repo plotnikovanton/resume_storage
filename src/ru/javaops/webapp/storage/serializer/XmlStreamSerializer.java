@@ -17,16 +17,16 @@ public class XmlStreamSerializer implements StreamSerializer {
 
 
     @Override
-    public Resume doRead(InputStream is) throws IOException {
-        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-            return xmlParser.unmarshall(r);
+    public void doWrite(OutputStream os, Resume resume) throws IOException {
+        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            xmlParser.marshal(resume, w);
         }
     }
 
     @Override
-    public void doWrite(OutputStream os, Resume resume) throws IOException {
-        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
-            xmlParser.marshal(resume, w);
+    public Resume doRead(InputStream is) throws IOException {
+        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            return xmlParser.unmarshall(r);
         }
     }
 }
