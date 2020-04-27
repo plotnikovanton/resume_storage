@@ -18,11 +18,10 @@ public class DataStreamSerializer implements StreamSerializer {
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
             Map<ContactType, String> contacts = resume.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            writeCollection(dos, contacts.entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
-            }
+            });
             writeSections(dos, resume.getSections());
         }
     }
@@ -31,22 +30,28 @@ public class DataStreamSerializer implements StreamSerializer {
     public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
             Resume resume = new Resume(dis.readUTF(), dis.readUTF());
-            int size = dis.readInt();
-            for (int i = 0; i < size; i++) {
-                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
+            readNext(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readSections(dis, resume);
-
             return resume;
         }
     }
 
     private void readSections(DataInputStream dis, Resume resume) throws IOException {
-        int size = dis.readInt();
-        for (int i = 0; i < size; i++) {
+        readNext(dis, () -> {
             SectionType st = valueOf(dis.readUTF());
             resume.addSection(st, readSection(dis, st));
+        });
+    }
+
+    private void readNext(DataInputStream dis, Executor executor) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+           executor.execute();
         }
+    }
+
+    private interface Executor {
+        void execute() throws IOException;
     }
 
     private Section readSection(DataInputStream dis, SectionType st) throws IOException {
@@ -89,13 +94,12 @@ public class DataStreamSerializer implements StreamSerializer {
     }
 
     private void writeSections(DataOutputStream dos, Map<SectionType, Section> sectionMap) throws IOException {
-        dos.writeInt(sectionMap.size());
-        for (Map.Entry<SectionType, Section> entry : sectionMap.entrySet()) {
+        writeCollection(dos, sectionMap.entrySet(), entry -> {
             SectionType st = entry.getKey();
             Section section = entry.getValue();
             dos.writeUTF(st.name());
             writeSection(dos, st, section);
-        }
+        });
     }
 
     private void writeSection(DataOutputStream dos, SectionType st, Section section) throws IOException {
