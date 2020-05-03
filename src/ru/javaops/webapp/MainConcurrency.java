@@ -66,7 +66,7 @@ public class MainConcurrency {
                 System.out.println("T1 has got LOCK1");
                 System.out.println("T1 is waiting");
                 try {
-                    LOCK1.wait();
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -80,11 +80,6 @@ public class MainConcurrency {
             synchronized (LOCK2) {
                 System.out.println("T2 has got LOCK2");
                 System.out.println("T2 is waiting");
-                try {
-                    LOCK2.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 synchronized (LOCK1) {
                     System.out.println("T2 has got LOCK1");
                 }
