@@ -13,7 +13,7 @@ public class MainUtil {
 //        System.out.println(result);
 
         System.out.println(minValue(new int[]{6, 3, 6, 2, 1, 8, 6, 7, 8, 5}));
-        System.out.println(oddOrEven(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 1))));
+        System.out.println(oddOrEven(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9))));
     }
 
     private static Integer getInt() {
@@ -27,6 +27,6 @@ public class MainUtil {
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream().mapToInt(Integer::intValue).sum();
-        return integers.stream().filter(item -> (sum % 2 == 0) == (item % 2 == 0)).collect(Collectors.toList());
+        return integers.stream().filter(item -> sum % 2 != item % 2).collect(Collectors.toList());
     }
 }
