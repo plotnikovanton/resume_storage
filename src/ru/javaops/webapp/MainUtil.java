@@ -21,19 +21,12 @@ public class MainUtil {
     }
 
     private static int minValue(int[] values) {
-        int result = 0;
-        int[] arr = Arrays.stream(values).distinct().sorted().toArray();
-        for (int item : arr) {
-            result = result * 10 + item;
-        }
-        return result;
+        return Arrays.stream(values).distinct().sorted().reduce(0, (result, element) -> result * 10 + element);
+        
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
         int sum = integers.stream().mapToInt(Integer::intValue).sum();
-        if (sum % 2 == 0)
-            return integers.stream().filter(item -> item % 2 == 0).collect(Collectors.toList());
-        else
-            return integers.stream().filter(item -> item % 2 != 0).collect(Collectors.toList());
+        return integers.stream().filter(item -> (sum % 2 == 0) == (item % 2 == 0)).collect(Collectors.toList());
     }
 }
