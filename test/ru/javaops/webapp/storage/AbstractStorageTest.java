@@ -2,6 +2,7 @@ package ru.javaops.webapp.storage;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.javaops.webapp.Config;
 import ru.javaops.webapp.exception.ExistStorageException;
 import ru.javaops.webapp.exception.NotExistStorageException;
 import ru.javaops.webapp.model.Resume;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static ru.javaops.webapp.storage.ResumeTestData.*;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("/home/antonpl/IdeaProjects/basejava/storage");
+    protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
     protected Storage storage;
 
