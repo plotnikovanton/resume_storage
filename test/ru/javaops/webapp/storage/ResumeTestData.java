@@ -1,8 +1,6 @@
 package ru.javaops.webapp.storage;
 
-import ru.javaops.webapp.model.*;
-
-import java.time.Month;
+import ru.javaops.webapp.model.Resume;
 
 public class ResumeTestData {
 
@@ -11,7 +9,7 @@ public class ResumeTestData {
     public static Resume testDataResume3 = new Resume("uuid3", "Full Name");
     public static Resume testDataResume4 = new Resume("uuid4", "Full Name");
 
-    static {
+    /*static {
 
         testDataResume1.addContact(ContactType.PHONENUMBER, "+7(921) 855-0482");
         testDataResume1.addContact(ContactType.SKYPE, "grigory.kislin");
@@ -151,7 +149,7 @@ public class ResumeTestData {
                         new Organization.Position(1984, Month.SEPTEMBER, 1987, Month.JUNE,
                                 "Учащийся",
                                 "Закончил с отличием"))));
-    }
+    }*/
 
     public static void main(String[] args) {
         System.out.println(testDataResume1);
