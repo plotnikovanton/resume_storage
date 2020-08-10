@@ -1,6 +1,5 @@
 package ru.javaops.webapp.util;
 
-import org.postgresql.util.PSQLException;
 import ru.javaops.webapp.exception.ExistStorageException;
 import ru.javaops.webapp.exception.StorageException;
 import ru.javaops.webapp.sql.ConnectionFactory;
@@ -17,12 +16,12 @@ public class SqlHelper {
         this.connectionFactory = connectionFactory;
     }
 
-    public <T> T help(String query, SqlManipulator sqlManipulator) {
+    public <T> T help(String query, SqlManipulator<T> sqlManipulator) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-            return (T) sqlManipulator.manipulate(preparedStatement);
+            return sqlManipulator.manipulate(preparedStatement);
         } catch (SQLException e) {
-            if (e instanceof PSQLException) throw new ExistStorageException(e.getSQLState());
+            if (e.getSQLState().equals("23505")) throw new ExistStorageException(e.getSQLState());
             throw new StorageException(e);
         }
     }

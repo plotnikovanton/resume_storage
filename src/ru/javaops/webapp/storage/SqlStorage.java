@@ -7,11 +7,10 @@ import ru.javaops.webapp.util.SqlHelper;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SqlStorage implements Storage {
-    public final SqlHelper sqlHelper;
+    private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
@@ -72,12 +71,11 @@ public class SqlStorage implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> resumes = new ArrayList<>();
-        return sqlHelper.help("select * from resume", preparedStatement -> {
+        return sqlHelper.help("select * from resume order by uuid ASC", preparedStatement -> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 resumes.add(new Resume(resultSet.getString("uuid"), resultSet.getString("full_name")));
             }
-            Collections.sort(resumes);
             return resumes;
         });
     }
