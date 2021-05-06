@@ -23,11 +23,6 @@ public abstract class AbstractStorageTest {
         this.storage = storage;
     }
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
-
     private static final Resume testResume1 = testDataResume1;
     private static final Resume testResume2 = testDataResume2;
     private static final Resume testResume3 = testDataResume3;

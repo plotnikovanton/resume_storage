@@ -1,20 +1,20 @@
-create table resume
+CREATE TABLE resume
 (
-    uuid text not null
-        constraint resume_pk
-            primary key,
-    full_name text not null
+    uuid      TEXT NOT NULL
+        CONSTRAINT resume_pk
+            PRIMARY KEY,
+    full_name TEXT NOT NULL
 );
 
-create table contact
+CREATE TABLE contact
 (
-    id serial not null
-        constraint contact_pk
-            primary key,
-    resume_uuid char(36) not null references resume (uuid) on delete cascade,
-    type text not null,
-    value text not null
+    id          SERIAL   NOT NULL
+        CONSTRAINT contact_pk
+            PRIMARY KEY,
+    resume_uuid CHAR(36) NOT NULL REFERENCES resume (uuid) ON DELETE CASCADE,
+    type        TEXT     NOT NULL,
+    value       TEXT     NOT NULL
 );
 
-create unique index contact_uuid_type_index
-    on contact (resume_uuid, type);
+CREATE UNIQUE INDEX contact_uuid_type_index
+    ON contact (resume_uuid, type);

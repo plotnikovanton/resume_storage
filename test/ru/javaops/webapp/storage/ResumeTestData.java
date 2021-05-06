@@ -2,12 +2,19 @@ package ru.javaops.webapp.storage;
 
 import ru.javaops.webapp.model.Resume;
 
+import java.util.UUID;
+
 public class ResumeTestData {
 
-    public static Resume testDataResume1 = new Resume("uuid1", "Full Name");
-    public static Resume testDataResume2 = new Resume("uuid2", "Full Name");
-    public static Resume testDataResume3 = new Resume("uuid3", "Full Name");
-    public static Resume testDataResume4 = new Resume("uuid4", "Full Name");
+    public static final String UUID_1 = UUID.randomUUID().toString();
+    public static final String UUID_2 = UUID.randomUUID().toString();
+    public static final String UUID_3 = UUID.randomUUID().toString();
+    public static final String UUID_4 = UUID.randomUUID().toString();
+
+    public static Resume testDataResume1 = new Resume(UUID_1, "Name1 ");
+    public static Resume testDataResume2 = new Resume(UUID_2, "Name2");
+    public static Resume testDataResume3 = new Resume(UUID_3, "Name3");
+    public static Resume testDataResume4 = new Resume(UUID_4, "Name4");
 
     /*static {
 
