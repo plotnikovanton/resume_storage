@@ -5,10 +5,12 @@ import org.junit.Test;
 import ru.javaops.webapp.Config;
 import ru.javaops.webapp.exception.ExistStorageException;
 import ru.javaops.webapp.exception.NotExistStorageException;
+import ru.javaops.webapp.model.ContactType;
 import ru.javaops.webapp.model.Resume;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -56,8 +58,8 @@ public abstract class AbstractStorageTest {
     @Test
     public void save() {
         storage.save(testResume4);
-        assertGet(testResume4);
         assertSize(4);
+        assertGet(testResume4);
     }
 
     @Test(expected = ExistStorageException.class)
@@ -68,6 +70,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void update() {
         Resume newResume = new Resume(UUID_1, "New Full Name");
+        testDataResume1.addContact(ContactType.EMAIL, "gkislin@gmail.com");
+        testDataResume1.addContact(ContactType.SKYPE, "NewSkype");
+        testDataResume1.addContact(ContactType.PHONENUMBER, "+7(981) 222-2222");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_1));
     }
@@ -91,7 +96,10 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() {
         List<Resume> resumes = storage.getAllSorted();
-        assertEquals(resumes, Arrays.asList(testResume1, testResume2, testResume3));
+        assertEquals(3, resumes.size());
+        List<Resume> sortedResumes = Arrays.asList(testResume1, testResume2, testResume3);
+        Collections.sort(sortedResumes);
+        assertEquals(sortedResumes, resumes);
     }
 
     @Test

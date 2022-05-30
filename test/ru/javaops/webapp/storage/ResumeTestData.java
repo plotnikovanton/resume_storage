@@ -1,5 +1,6 @@
 package ru.javaops.webapp.storage;
 
+import ru.javaops.webapp.model.ContactType;
 import ru.javaops.webapp.model.Resume;
 
 import java.util.UUID;
@@ -16,17 +17,20 @@ public class ResumeTestData {
     public static Resume testDataResume3 = new Resume(UUID_3, "Name3");
     public static Resume testDataResume4 = new Resume(UUID_4, "Name4");
 
-    /*static {
+    static {
 
         testDataResume1.addContact(ContactType.PHONENUMBER, "+7(921) 855-0482");
-        testDataResume1.addContact(ContactType.SKYPE, "grigory.kislin");
+//        testDataResume1.addContact(ContactType.SKYPE, "grigory.kislin");
         testDataResume1.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
-        testDataResume1.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
-        testDataResume1.addContact(ContactType.GITHUB, "https://github.com/gkislin");
-        testDataResume1.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
-        testDataResume1.addContact(ContactType.WEBPAGE, "http://gkislin.ru/");
+//        testDataResume1.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
+//        testDataResume1.addContact(ContactType.GITHUB, "https://github.com/gkislin");
+//        testDataResume1.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
+//        testDataResume1.addContact(ContactType.WEBPAGE, "http://gkislin.ru/");
+        testDataResume4.addContact(ContactType.PHONENUMBER, "4444");
+        testDataResume4.addContact(ContactType.SKYPE, "Skype");
+    }
 
-        testDataResume1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
+        /*testDataResume1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
                 " по Java Web и Enterprise технологиям"));
 
         testDataResume1.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
