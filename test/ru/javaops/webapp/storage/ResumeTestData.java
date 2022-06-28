@@ -1,8 +1,8 @@
 package ru.javaops.webapp.storage;
 
-import ru.javaops.webapp.model.ContactType;
-import ru.javaops.webapp.model.Resume;
+import ru.javaops.webapp.model.*;
 
+import java.time.Month;
 import java.util.UUID;
 
 public class ResumeTestData {
@@ -28,9 +28,8 @@ public class ResumeTestData {
 //        testDataResume1.addContact(ContactType.WEBPAGE, "http://gkislin.ru/");
         testDataResume4.addContact(ContactType.PHONENUMBER, "4444");
         testDataResume4.addContact(ContactType.SKYPE, "Skype");
-    }
 
-        /*testDataResume1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
+        testDataResume1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
                 " по Java Web и Enterprise технологиям"));
 
         testDataResume1.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
@@ -160,7 +159,7 @@ public class ResumeTestData {
                         new Organization.Position(1984, Month.SEPTEMBER, 1987, Month.JUNE,
                                 "Учащийся",
                                 "Закончил с отличием"))));
-    }*/
+    }
 
     public static void main(String[] args) {
         System.out.println(testDataResume1);
