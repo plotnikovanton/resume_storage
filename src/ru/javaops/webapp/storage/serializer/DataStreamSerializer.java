@@ -30,7 +30,7 @@ public class DataStreamSerializer implements StreamSerializer {
     public Resume doRead(InputStream is) throws IOException {
         try (DataInputStream dis = new DataInputStream(is)) {
             Resume resume = new Resume(dis.readUTF(), dis.readUTF());
-            readNext(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readNext(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             readSections(dis, resume);
             return resume;
         }
@@ -39,7 +39,7 @@ public class DataStreamSerializer implements StreamSerializer {
     private void readSections(DataInputStream dis, Resume resume) throws IOException {
         readNext(dis, () -> {
             SectionType st = valueOf(dis.readUTF());
-            resume.addSection(st, readSection(dis, st));
+            resume.setSection(st, readSection(dis, st));
         });
     }
 

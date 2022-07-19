@@ -4,12 +4,42 @@ import java.util.Objects;
 
 public enum ContactType {
     PHONENUMBER("Телефон"),
-    SKYPE("Skype"),
-    EMAIL("Почта"),
-    LINKEDIN("Профиль LinkedIn"),
-    GITHUB("Профиль GitHub"),
-    STACKOVERFLOW("Профиль Stackoverflow"),
-    WEBPAGE("Домашняя страница");
+    SKYPE("Skype") {
+        @Override
+        public String toHtml0(String value) {
+            return getTitle() + ": " + toLink("skype: " + value, value);
+        }
+    },
+    EMAIL("Почта") {
+        @Override
+        public String toHtml0(String value) {
+            return getTitle() + ": " + toLink("skype: " + value, value);
+        }
+    },
+    LINKEDIN("Профиль LinkedIn") {
+        @Override
+        public String toHtml0(String value) {
+            return toLink(value);
+        }
+    },
+    GITHUB("Профиль GitHub") {
+        @Override
+        public String toHtml0(String value) {
+            return toLink(value);
+        }
+    },
+    STACKOVERFLOW("Профиль Stackoverflow"){
+        @Override
+        public String toHtml0(String value) {
+            return toLink(value);
+        }
+    },
+    WEBPAGE("Домашняя страница") {
+        @Override
+        public String toHtml0(String value) {
+            return toLink(value);
+        }
+    };
 
     private final String title;
 
@@ -20,5 +50,21 @@ public enum ContactType {
 
     public String getTitle() {
         return title;
+    }
+
+    protected String toHtml0(String value) {
+        return title + ": " + value;
+    }
+
+    public String toHtml(String value) {
+        return (value == null) ? "" : title + ": " + value;
+    }
+
+    public String toLink(String href) {
+        return toLink(href, title);
+    }
+
+    public static String toLink(String href, String title) {
+        return "<a href='" + href + "'>" + title + "</a>";
     }
 }

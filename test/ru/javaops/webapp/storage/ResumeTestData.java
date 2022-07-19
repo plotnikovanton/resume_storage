@@ -19,23 +19,23 @@ public class ResumeTestData {
 
     static {
 
-        testDataResume1.addContact(ContactType.PHONENUMBER, "+7(921) 855-0482");
+        testDataResume1.setContact(ContactType.PHONENUMBER, "+7(921) 855-0482");
 //        testDataResume1.addContact(ContactType.SKYPE, "grigory.kislin");
-        testDataResume1.addContact(ContactType.EMAIL, "gkislin@yandex.ru");
+        testDataResume1.setContact(ContactType.EMAIL, "gkislin@yandex.ru");
 //        testDataResume1.addContact(ContactType.LINKEDIN, "https://www.linkedin.com/in/gkislin");
 //        testDataResume1.addContact(ContactType.GITHUB, "https://github.com/gkislin");
 //        testDataResume1.addContact(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473");
 //        testDataResume1.addContact(ContactType.WEBPAGE, "http://gkislin.ru/");
-        testDataResume4.addContact(ContactType.PHONENUMBER, "4444");
-        testDataResume4.addContact(ContactType.SKYPE, "Skype");
+        testDataResume4.setContact(ContactType.PHONENUMBER, "4444");
+        testDataResume4.setContact(ContactType.SKYPE, "Skype");
 
-        testDataResume1.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
+        testDataResume1.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения" +
                 " по Java Web и Enterprise технологиям"));
 
-        testDataResume1.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
+        testDataResume1.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика," +
                 " креативность, инициативность. Пурист кода и архитектуры."));
 
-        testDataResume1.addSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов " +
+        testDataResume1.setSection(SectionType.ACHIEVEMENT, new ListSection("С 2013 года: разработка проектов " +
                 "\"Разработка Web приложения\",\"Java Enterprise\", " +
                 "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). " +
                 "Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". " +
@@ -55,7 +55,7 @@ public class ResumeTestData {
                 "Реализация протоколов по приему платежей всех основных платежных системы России " +
                         "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа."));
 
-        testDataResume1.addSection(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
+        testDataResume1.setSection(SectionType.QUALIFICATIONS, new ListSection("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle",
                 "MySQL, SQLite, MS SQL, HSQLDB",
@@ -78,7 +78,7 @@ public class ResumeTestData {
                         "архитектурных шаблонов, UML, функционального программирования",
                 "Родной русский, английский \"upper intermediate\""));
 
-        testDataResume1.addSection(SectionType.EXPERIENCE, new OrganizationSection(
+        testDataResume1.setSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization("Java Online Projects", "http://javaops.ru/",
                         new Organization.Position(2013, Month.OCTOBER,
                                 "Автор проекта",
@@ -130,7 +130,7 @@ public class ResumeTestData {
                                 "Тестирование, отладка, внедрение ПО цифровой телефонной станции " +
                                         "Alcatel 1000 S12 (CHILL, ASM)."))));
 
-        testDataResume1.addSection(SectionType.EDUCATION, new OrganizationSection(
+        testDataResume1.setSection(SectionType.EDUCATION, new OrganizationSection(
                 new Organization("Coursera", "https://www.coursera.org/course/progfun",
                         new Organization.Position(2013, Month.MARCH, 2013, Month.MAY,
                                 "Учащийся",
